@@ -80,28 +80,25 @@ router.put('/edit/:id', (req, res) => {
 });
 
 //DELETE a user
-//TODO: Test later, scallywag.thoughts may or may not cause issues due to misaligned field names?
 //TODO: Test later, asynchronicity of deleting user may cause problems deleting their thoughts after the fact.
-// router.delete('/walktheplank/:id', async (req, res) => {
-//     try {
-//         const scallywag = await User.findOneAndDelete({ _id: req.params.id })
-//         // .then((scallywag) =>
-//         if (scallywag) {
-//             Thought.deleteMany({ _id: { $in: scallywag.thoughts } })
-//             console.log(`Arr, to Davy Jones locker with that ${scallywag.username} scallywag!`)
-//             return res.json({ message: 'Arr, to Davy Jones locker with that scallywag!' })
-//         } else {
-//             return res.status(404).json({ message: 'Shiver me timbers! There be no landlubber by that name on this vessel!' })
-//         }
-//         // !scallywag
-//         //     ? res.status(404).json({ message: 'No user with this id!' })
-//         //     : Thought.deleteMany({ _id: { $in: scallywag.thoughts } })
-//         //         // )
-//         //         .then(() => res.json({ message: 'Arr, to Davy Jones locker with that scallywag!' }))
-//         //         .catch((err) => res.status(500).json(err));
-//     } catch (err) {
-//         console.log(err)
-//         res.status(500).json(err)
-//     }
-// })
+router.delete('/keelhaul/:id', async (req, res) => {
+    try {
+        const sharkbait = await Thought.findOneAndRemove({ _id: req.params.id })
+        if (sharkbait) {
+            const user = await User.findOneAndUpdate(
+                { thoughts: req.params.id },
+                { $pull: { thoughts: req.params.id } },
+                { new: true }
+            )
+            console.log(user)
+            console.log(`${sharkbait.username}'s thoughts are safe... at the bottom of the sea! Yarr harr harr!`)
+            return res.json({ message: 'Yer thoughts are safe... at the bottom of the sea! Yarr harr harr!' })
+        } else {
+            return res.status(404).json({ message: 'Shiver me timbers! There be no thoughts by that id on this vessel!' })
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500).json(err)
+    }
+})
 module.exports = router;
