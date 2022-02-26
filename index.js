@@ -11,7 +11,7 @@ app.use(routes);
 
 db.once('open', () => {
     app.listen(PORT, () => {
-      console.log(`Arr, ye vessel be docking on port ${PORT}, me hearty! 🏴‍☠️`);
+      console.log(`Arr, ye port ${PORT} be ready to dock the vessel, me captain! 🏴‍☠️`);
     });
   });
   
