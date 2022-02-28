@@ -15,8 +15,7 @@ This social-networking API hosts a full suite of clearly labeled CRUD operations
 
 There is no front-end for this app, which means in order to observe any of its functionality, the user will have to download the code from this repository and operate it themselves. I have recorded a video which briefly walks through this installation and explains how the app functions, linked here: 
 
-```enter video url here
-```
+[https://youtu.be/ovAWz7fJqfE]
 
 1. Clone the repository using your computer's command line.
 2. Open the downloaded folder in VSCode.
@@ -27,7 +26,7 @@ There is no front-end for this app, which means in order to observe any of its f
 
 ## Usage
 
-Please refer to the linked video for more in-depth coverage on how to use the app.
+Please refer to the linked video above for more in-depth coverage on how to use the app.
 
 1. Be sure you've followed the steps for installation, as detailed above. The app's server must be live in order to use the app.
 2. While the server is live, the user has access to a large suite of CRUD operations which operate similar to how a social networking site would operate. The user has the following choices:
