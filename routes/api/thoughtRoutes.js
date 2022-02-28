@@ -79,7 +79,7 @@ router.put('/edit/:id', (req, res) => {
         .catch((err) => res.status(500).json(err));
 });
 
-//DELETE a user
+//DELETE a thought
 //TODO: Test later, asynchronicity of deleting user may cause problems deleting their thoughts after the fact.
 router.delete('/keelhaul/:id', async (req, res) => {
     try {
@@ -99,6 +99,48 @@ router.delete('/keelhaul/:id', async (req, res) => {
     } catch (err) {
         console.log(err)
         res.status(500).json(err)
+    };
+});
+
+
+//POST route for reactions
+router.post('/:thoughtId/reactions', async (req, res) => {
+    try {
+        const reaction = await Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $addToSet: { reactions: req.body}},
+            { runValidators: true, new: true }
+        )
+        if (reaction) {
+            console.log('Reaction posted')
+            return res.json(reaction)
+        } else {
+            res.send('Arrr, there be no thought to react to, ye scurvy dog!')
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500).json(err)
+    };
+});
+
+//DELETE route for reactions
+router.delete('/:thoughtId/reactions/:reactionId', async (req,res) => {
+    try {
+        const sharkbait = await Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $pull: { reactions: { reactionId: req.params.reactionId } } },
+            { new: true }
+        )
+        if (sharkbait) {
+            console.log('Yer reaction has been deleted! Ye lily-livered landlubber! Arr harr harr!')
+            return res.json({ message: 'Yer reaction has been deleted! Ye lily-livered landlubber! Arr harr harr!'})
+        } else {
+            res.status(404).json({ message: 'Shiver me timbers! There be no thoughts by that id on this vessel!' })
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500).json(err)
     }
-})
+});
+
 module.exports = router;
